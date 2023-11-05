@@ -26,3 +26,16 @@ impl Info {
         Ok(Info { data })
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_info() {
+        let info = Info::new("testdata/stardict-oxford-gb-2.4.2/oxford-gb.ifo");
+        assert!(info.is_ok());
+        let info = info.unwrap();
+        println!("{:?}", info);
+    }
+}
