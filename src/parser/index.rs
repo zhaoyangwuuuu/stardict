@@ -8,6 +8,7 @@ pub struct Word {
 }
 
 #[derive(Debug)]
-pub struct Index {
+pub struct Index<'a> {
     data: Cursor<Vec<u8>>,
+    same_type_sequence: &'a str,
 }
