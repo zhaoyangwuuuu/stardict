@@ -1,4 +1,8 @@
-use std::{error::Error, fs, io::Cursor};
+use std::{
+    error::Error,
+    fs,
+    io::{Cursor, Read},
+};
 
 #[derive(Debug)]
 pub struct Dictionary<'a> {
@@ -8,8 +12,14 @@ pub struct Dictionary<'a> {
 
 impl<'a> Dictionary<'a> {
     pub fn new(file_path: &str, same_type_sequence: &'a str) -> Result<Self, Box<dyn Error>> {
-        fs::File::open(file_path)?;
-        let zr = flate2::read::GzDecoder::new(fs::File::open(file_path)?);
-        todo!()
+        let f = fs::File::open(file_path)?;
+        let mut zr = flate2::read::GzDecoder::new(f);
+        let mut buf = Vec::new();
+        zr.read_to_end(&mut buf)?;
+
+        Ok(Dictionary {
+            data: Cursor::new(buf),
+            same_type_sequence,
+        })
     }
 }
