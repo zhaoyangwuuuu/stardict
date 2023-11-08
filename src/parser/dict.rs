@@ -1,4 +1,5 @@
 use std::{
+    collections::HashMap,
     error::Error,
     fs,
     io::{Cursor, Read},
@@ -21,5 +22,14 @@ impl<'a> Dictionary<'a> {
             data: Cursor::new(buf),
             same_type_sequence,
         })
+    }
+
+    pub fn get(
+        &mut self,
+        offset: u64,
+        size: u64,
+    ) -> Result<HashMap<char, Vec<u8>>, Box<dyn Error>> {
+        self.data.set_position(offset);
+        for (i, c) in self.same_type_sequence.chars().enumerate() {}
     }
 }
